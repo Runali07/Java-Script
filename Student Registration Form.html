@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form {
+      background: #ffffff;
+      padding: 30px;
+      width: 350px;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: 600;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1.8px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #667eea;
+    }
+    .error {
+      font-size: 12px;
+      color: #e63946;
+    }
+    .error-input {
+      border-color: #e63946;
+    }
+    .success-input {
+      border-color: #2a9d8f;
+    }
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #667eea;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #5a67d8;
+    }
+</style>
+</head>
+<body>
+<form class="form" onsubmit="return validateForm()">
+  <h2>Student Registration</h2>
+  <label for="name">Full Name</label>
+  <input type="text" id="name" placeholder="Enter your name">
+  <span class="error" id="nameError"></span>
+  <label for="email">Email Address</label>
+  <input type="text" id="email" placeholder="Enter your email">
+  <span class="error" id="emailError"></span>
+  <label for="age">Age</label>
+  <input type="number" id="age" placeholder="Enter your age">
+  <span class="error" id="ageError"></span>
+  <button type="submit">Register</button>
+</form>
+<script>
+  function validateForm() {
+    let valid = true;
+    let name = document.getElementById("name");
+    let email = document.getElementById("email");
+    let age = document.getElementById("age");
+    let nameError = document.getElementById("nameError");
+    let emailError = document.getElementById("emailError");
+    let ageError = document.getElementById("ageError");
+    nameError.textContent = "";
+    emailError.textContent = "";
+    ageError.textContent = "";
+    name.className = "";
+    email.className = "";
+    age.className = "";
+    if (name.value.trim().length < 3) {
+      nameError.textContent = "Name must be at least 3 characters";
+      name.classList.add("error-input");
+      valid = false;
+    } else {
+      name.classList.add("success-input");
+    }
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value)) {
+      emailError.textContent = "Enter a valid email address";
+      email.classList.add("error-input");
+      valid = false;
+    } else {
+      email.classList.add("success-input");
+    }
+    if (age.value < 16 || age.value > 30) {
+      ageError.textContent = "Age must be between 16 and 30";
+      age.classList.add("error-input");
+      valid = false;
+    } else {
+      age.classList.add("success-input");
+    }
+    if (valid) {
+      alert("Registration Successful!");
+    }
+    return valid;
+  }
+</script>
+</body>
+</html>

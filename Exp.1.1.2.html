@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Responsive Banking Interface</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .bank-container {
+    background: white;
+    padding: 25px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+    .balance-box {
+      background: green;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .balance-box h1 {
+      margin: 10px 0 0;
+    }
+    .transaction-box {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .deposit {
+      background: lightblue;
+    }
+    .withdraw {
+      background: red;
+    }
+    #message {
+      text-align: center;
+      font-weight: bold;
+    }
+    @media (max-width: 480px) {
+      .bank-container {
+        width: 90%;
+      }
+      .btn-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bank-container">
+    <h2 style="text-align:center">My Bank Account</h2>
+    <div class="balance-box">
+      <p>Current Balance</p>
+      <h1>₹ <span id="balance">5000</span></h1>
+    </div>
+    <div class="transaction-box">
+      <input type="number" id="amount" placeholder="Enter amount">
+      <div class="btn-group">
+        <button class="deposit" onclick="deposit()">Deposit</button>
+        <button class="withdraw" onclick="withdraw()">Withdraw</button>
+      </div>
+    </div>
+    <p id="message"></p>
+  </div>
+  <script>
+    let balance = 5000;
+    function deposit() {
+      let amount = Number(document.getElementById("amount").value);
+      let message = document.getElementById("message");
+      if (amount <= 0 || isNaN(amount)) {
+        message.style.color = "red";
+        message.innerText = "Please enter a valid amount!";
+        return;
+      }
+      balance += amount;
+      updateUI("Deposit successful!", "green");
+    }
+    function withdraw() {
+      let amount = Number(document.getElementById("amount").value);
+      let message = document.getElementById("message");
+      if (amount <= 0 || isNaN(amount)) {
+        message.style.color = "red";
+        message.innerText = "Please enter a valid amount!";
+        return;
+      }
+      if (amount > balance) {
+        message.style.color = "red";
+        message.innerText = "Insufficient balance!";
+        return;
+      }
+      balance -= amount;
+      updateUI("Withdrawal successful!", "green");
+    }
+    function updateUI(text, color) {
+      document.getElementById("balance").innerText = balance;
+      document.getElementById("message").innerText = text;
+      document.getElementById("message").style.color = color;
+      document.getElementById("amount").value = "";
+    }
+  </script>
+</body>
+</html>

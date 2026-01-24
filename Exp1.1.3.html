@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<style>
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --card-bg: white;
+  --header-bg: black;
+}
+[data-theme="dark"] {
+  --bg-color: black;
+  --text-color: white;
+  --card-bg: black;
+  --header-bg: ehite;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+}
+header {
+  grid-column: 1 / 3;
+  background: var(--header-bg);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+header button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+aside {
+  background: var(--card-bg);
+  padding: 20px;
+}
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+aside li {
+  margin: 15px 0;
+}
+main {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px auto 1fr;
+  }
+  aside {
+    grid-row: 2;
+  }
+  main {
+    grid-row: 3;
+  }
+}
+</style>
+</head>
+<body>
+<div class="dashboard">
+  <header>
+    <h2>Admin Dashboard</h2>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </header>
+  <aside>
+    <ul>
+      <li>Dashboard</li>
+      <li>Users</li>
+      <li>Reports</li>
+      <li>Settings</li>
+    </ul>
+  </aside>
+  <main>
+    <div class="card">Total Users: 120</div>
+    <div class="card">Revenue: ₹50,000</div>
+    <div class="card">New Orders: 32</div>
+    <div class="card">Feedback: 18</div>
+  </main>
+</div>
+<script>
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme) {
+  document.documentElement.setAttribute("data-theme", currentTheme);
+}
+function toggleTheme() {
+  let theme = document.documentElement.getAttribute("data-theme");
+  if (theme === "dark") {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+  } else {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+  }
+}
+</script>
+</body>
+</html>

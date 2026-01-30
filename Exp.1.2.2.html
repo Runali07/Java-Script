@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dynamic Product Filter</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+  padding: 20px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+select {
+  padding: 8px 12px;
+  font-size: 16px;
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  transition: all 0.4s ease;
+}
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.card:hover {
+  transform: scale(1.05);
+}
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h2>Product Store</h2>
+  <select id="sort" onchange="sortProducts()">
+    <option value="default">Sort Products</option>
+    <option value="low">Price: Low to High</option>
+    <option value="high">Price: High to Low</option>
+    <option value="name">Name (A-Z)</option>
+  </select>
+</div>
+<div class="products" id="productList"></div>
+<script>
+const products = [
+  { name: "Laptop", price: 55000 },
+  { name: "Mobile", price: 18000 },
+  { name: "Headphones", price: 2500 },
+  { name: "Smart Watch", price: 7000 },
+  { name: "Camera", price: 42000 },
+  { name: "Keyboard", price: 1500 }
+];
+function displayProducts(list) {
+  const container = document.getElementById("productList");
+  container.innerHTML = "";
+  list.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${product.name}</h3>
+      <p>₹${product.price}</p>
+    `;
+    container.appendChild(card);
+  });
+}
+function sortProducts() {
+  const value = document.getElementById("sort").value;
+  let sortedProducts = [...products];
+
+  if (value === "low") {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  } 
+  else if (value === "high") {
+    sortedProducts.sort((a, b) => b.price - a.price);
+  } 
+  else if (value === "name") {
+    sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  displayProducts(sortedProducts);
+}
+displayProducts(products);
+</script>
+</body>
+</html>
